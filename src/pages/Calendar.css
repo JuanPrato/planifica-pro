@@ -1,0 +1,34 @@
+.calendar-header {
+  height: 75px;
+}
+
+ion-text {
+  font-size: 22px;
+  font-weight: 500;
+}
+
+ion-icon {
+  font-size: 30px;
+}
+
+ion-label > h2 {
+  font-size: 20px;
+}
+
+ion-row > .date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  strong {
+    font-size: 20px;
+  }
+
+  small {
+    font-size: 15px;
+  }
+}
+
+.duties {
+  padding-left: 20px;
+}
