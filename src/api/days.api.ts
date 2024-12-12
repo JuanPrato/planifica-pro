@@ -1,5 +1,6 @@
 import { Dayjs } from "dayjs";
 import { DayDetails } from "../types";
+import { Preferences } from "@capacitor/preferences";
 
 const tareas = [
   "Responder correos pendientes",
@@ -15,7 +16,7 @@ const tareas = [
 ];
 
 export function getDaysList(dates: Dayjs[]): DayDetails[] {
-  return dates.map((day) => ({
+  const resolve = dates.map((day) => ({
     date: day,
     activities: Array.from({ length: Math.ceil(Math.random() * 5) }).map(
       (_, j) => ({
@@ -26,4 +27,21 @@ export function getDaysList(dates: Dayjs[]): DayDetails[] {
       })
     ),
   }));
+
+  resolve.forEach((r) => {
+    Preferences.set({
+      key: r.date.format("YYYY-DD-MM"),
+      value: JSON.stringify(r),
+    });
+  });
+
+  return resolve;
+}
+
+export async function getDayDetails(date: Dayjs) {
+  const { value } = await Preferences.get({ key: date.format("YYYY-DD-MM") });
+
+  if (value === null) return value;
+
+  return JSON.parse(value) as DayDetails;
 }

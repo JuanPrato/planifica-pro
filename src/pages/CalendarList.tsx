@@ -57,7 +57,7 @@ const CalendarPage: React.FC = () => {
         <IonList lines='full'>
           {
             days.map((day) => (
-              <DayItem day={day} />
+              <DayItem day={day} key={day.date.toString()} />
             ))
           }
         </IonList>
