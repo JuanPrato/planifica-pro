@@ -27,7 +27,7 @@ export default function DayItem({ day: { date, activities } }: { day: DayDetails
   }
 
   return (
-    <IonItem button>
+    <IonItem button routerLink={`/calendar/day/${date.format('DD-MM-YYYY')}`}>
       <IonGrid fixed>
         <IonRow className="ion-align-items-center">
           <IonCol className='date' size='2'>

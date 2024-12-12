@@ -11,7 +11,6 @@ import {
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { ellipse, square, calendar, settingsOutline } from 'ionicons/icons';
-import CalendarPage from './pages/Calendar';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
 
@@ -44,6 +43,8 @@ import '@ionic/react/css/palettes/dark.system.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import DayPage from './pages/DayPage';
+import CalendarPage from './pages/CalendarPage';
 
 setupIonicReact();
 
@@ -52,9 +53,9 @@ const App: React.FC = () => (
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
-          <Route exact path="/calendar">
-            <CalendarPage />
-          </Route>
+          <Route path="/calendar"
+            render={props => <CalendarPage {...props} />}
+          />
           <Route exact path="/tab2">
             <Tab2 />
           </Route>
