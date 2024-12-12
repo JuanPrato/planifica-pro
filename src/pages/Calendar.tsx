@@ -1,13 +1,41 @@
-import { IonButton, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButton, IonContent, IonHeader, IonIcon, IonList, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
 
 import './Calendar.css';
-import { chevronBackOutline, chevronForwardOutline, starOutline } from 'ionicons/icons';
+import { chevronBackOutline, chevronForwardOutline } from 'ionicons/icons';
+import DayItem from '../components/DayItem';
+import dayjs from 'dayjs';
+import { useEffect, useState } from 'react';
+import { getStartOfWeek } from '../util/date.util';
+import { getDaysList } from '../api/days.api';
+
+function getWeekdays(initialDate?: dayjs.Dayjs) {
+  const now = dayjs(initialDate);
+  const daysOfWeek = [now];
+
+  for (let i = 0; i < 6; i++) {
+    daysOfWeek.push(daysOfWeek[i].add(1, "day"));
+  }
+
+  return daysOfWeek;
+}
 
 const CalendarPage: React.FC = () => {
+
+  const [week, setWeek] = useState(getStartOfWeek(dayjs()));
+  const [days, setDays] = useState(getDaysList(getWeekdays(week)));
+
+  useEffect(() => {
+    setDays(getDaysList(getWeekdays(week)));
+  }, [week]);
+
+  function updateWeek(plus: number) {
+    setWeek(getStartOfWeek(week.add(plus, "week")))
+  }
+
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
+      <IonHeader >
+        <IonToolbar color="secondary">
           <IonTitle>Calendario</IonTitle>
         </IonToolbar>
       </IonHeader>
@@ -18,35 +46,20 @@ const CalendarPage: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <IonRow className='calendar-header ion-justify-content-around ion-align-items-center'>
-          <IonButton fill='clear' color="dark">
+          <IonButton fill='clear' color="dark" onClick={() => updateWeek(-1)}>
             <IonIcon aria-hidden="true" icon={chevronBackOutline} />
           </IonButton>
           <IonText>Semana del 11 de diciembre</IonText>
-          <IonButton fill='clear' color="dark">
+          <IonButton fill='clear' color="dark" onClick={() => updateWeek(1)}>
             <IonIcon aria-hidden="true" icon={chevronForwardOutline} />
           </IonButton>
         </IonRow>
         <IonList lines='full'>
-          <IonItem button>
-            <IonGrid>
-              <IonRow className="ion-align-items-center">
-                <IonCol className='date' size='2'>
-                  <strong>Jueves</strong>
-                  <strong>11</strong>
-                  <small>dic</small>
-                </IonCol>
-                <IonCol className='duties'>
-                  <IonLabel>
-                    <h1><strong>4 tareas</strong></h1>
-                    <h2>0h 46m</h2>
-                  </IonLabel>
-                </IonCol>
-                <IonCol size='1'>
-                  <IonIcon aria-hidden="true" icon={starOutline} />
-                </IonCol>
-              </IonRow>
-            </IonGrid>
-          </IonItem>
+          {
+            days.map((day) => (
+              <DayItem day={day} />
+            ))
+          }
         </IonList>
       </IonContent>
     </IonPage>

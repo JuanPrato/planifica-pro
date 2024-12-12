@@ -65,7 +65,7 @@ const App: React.FC = () => (
             <Redirect to="/calendar" />
           </Route>
         </IonRouterOutlet>
-        <IonTabBar slot="bottom">
+        <IonTabBar slot="bottom" color="secondary">
           <IonTabButton tab="calendar" href="/calendar">
             <IonIcon aria-hidden="true" icon={calendar} />
             <IonLabel>Calendario</IonLabel>
