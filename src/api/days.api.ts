@@ -19,9 +19,9 @@ export function getDaysList(dates: Dayjs[]): DayDetails[] {
     date: day,
     activities: Array.from({ length: Math.ceil(Math.random() * 5) }).map(
       (_, j) => ({
-        title: tareas[Math.ceil(Math.random() * tareas.length)],
+        title: tareas[Math.floor(Math.random() * tareas.length)],
         primary: j === 0,
-        time: 3,
+        time: Math.random() * 30 + 30,
         completed: Math.random() > 0.5,
       })
     ),
