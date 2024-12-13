@@ -4,6 +4,7 @@ import { starOutline, star, starSharp } from 'ionicons/icons';
 import { DayDetails } from '../types';
 
 import "./DayItem.css";
+import { getFormattedTimeForActivities } from '../util/time.util';
 
 export default function DayItem({ day: { date, activities } }: { day: DayDetails }) {
 
@@ -15,15 +16,6 @@ export default function DayItem({ day: { date, activities } }: { day: DayDetails
 
   function getPendingQ() {
     return activities.reduce((a, i) => a + (i.completed ? 0 : 1), 0);
-  }
-
-  function getPendingTime() {
-    const totalMinutes = activities.reduce((a, i) => a + i.time, 0);
-
-    return dayjs()
-      .startOf("day")
-      .add(totalMinutes, "minutes")
-      .format("HH[h] mm[m]");
   }
 
   return (
@@ -38,7 +30,7 @@ export default function DayItem({ day: { date, activities } }: { day: DayDetails
           <IonCol className='duties' size='8'>
             <IonLabel>
               <h1 className='ellipsis'>{getPrimary()?.title}</h1>
-              <h2>{pending} tareas pendientes - {getPendingTime()}</h2>
+              <h2>{pending} tareas pendientes - {getFormattedTimeForActivities(activities)}</h2>
             </IonLabel>
           </IonCol>
           <IonCol size='2' className='star'>

@@ -5,7 +5,7 @@ import { chevronBackOutline, chevronForwardOutline } from 'ionicons/icons';
 import DayItem from '../components/DayItem';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
-import { getStartOfWeek } from '../util/date.util';
+import { getStartOfWeek } from '../util/time.util';
 import { getDaysList } from '../api/days.api';
 
 function getWeekdays(initialDate?: dayjs.Dayjs) {
@@ -49,7 +49,7 @@ const CalendarPage: React.FC = () => {
           <IonButton fill='clear' color="dark" onClick={() => updateWeek(-1)}>
             <IonIcon aria-hidden="true" icon={chevronBackOutline} />
           </IonButton>
-          <IonText>Semana del 11 de diciembre</IonText>
+          <IonText>Semana del {week.format("DD [de] MMMM")}</IonText>
           <IonButton fill='clear' color="dark" onClick={() => updateWeek(1)}>
             <IonIcon aria-hidden="true" icon={chevronForwardOutline} />
           </IonButton>

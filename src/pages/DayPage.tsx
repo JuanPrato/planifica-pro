@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import { getDayDetails } from '../api/days.api'
 import { DayDetails } from '../types'
+import { ActivityItem } from '../components/activity-item.component'
 
 const DayPage: React.FC<RouteComponentProps<{ date: string }>> = ({ match }) => {
 
@@ -17,17 +18,19 @@ const DayPage: React.FC<RouteComponentProps<{ date: string }>> = ({ match }) => 
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
+        <IonToolbar color='secondary'>
           <IonButtons slot="start">
             <IonBackButton />
           </IonButtons>
-          <IonTitle>{day.format('dddd DD [de] MMMM')}
+          <IonTitle>{day.format('dddd[,] DD [de] MMMM')}
           </IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
         <br />
-        {JSON.stringify(data)}
+        {data?.activities.map(act => (
+          <ActivityItem activity={act} />
+        ))}
       </IonContent>
     </IonPage>
   )
