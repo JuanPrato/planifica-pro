@@ -1,0 +1,19 @@
+.primary {
+  border: solid 2px var(--ion-color-warning-tint);
+}
+
+ion-card-title {
+  font-size: 18px;
+  width: 75%;
+}
+
+ion-card-subtitle {
+  margin: 0;
+}
+
+ion-card-header {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-between;
+}
