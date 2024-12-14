@@ -17,3 +17,17 @@ ion-card-header {
   align-items: baseline;
   justify-content: space-between;
 }
+
+.time-remaining {
+  gap: 3px;
+}
+
+.time-details {
+  justify-content: space-between;
+}
+
+ion-progress-bar {
+  margin-top: 5px;
+  border-radius: 20px;
+  height: 5px;
+}

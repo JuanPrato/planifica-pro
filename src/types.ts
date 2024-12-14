@@ -5,6 +5,7 @@ export type Activity = {
   time: number;
   primary: boolean;
   completed: boolean;
+  timeUsed?: number;
 };
 
 export type DayDetails = {

@@ -10,7 +10,7 @@ import {
   setupIonicReact
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { ellipse, square, calendar, settingsOutline } from 'ionicons/icons';
+import { ellipse, square, calendar, settingsOutline, flashOutline } from 'ionicons/icons';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
 
@@ -69,17 +69,17 @@ const App: React.FC = () => {
             </Route>
           </IonRouterOutlet>
           <IonTabBar slot="bottom" color="secondary">
-            <IonTabButton tab="calendar" href="/calendar" selected={false}>
+            <IonTabButton tab="calendar" href="/calendar">
               <IonIcon aria-hidden="true" icon={calendar} />
               <IonLabel>Calendario</IonLabel>
             </IonTabButton>
             <IonTabButton tab="tab2" href="/tab2">
-              <IonIcon aria-hidden="true" icon={ellipse} />
-              <IonLabel>Tab 2</IonLabel>
+              <IonIcon aria-hidden="true" icon={flashOutline} />
+              <IonLabel>Tarea rápida</IonLabel>
             </IonTabButton>
             <IonTabButton tab="tab3" href="/tab3">
               <IonIcon aria-hidden="true" icon={settingsOutline} />
-              <IonLabel>Tab 3</IonLabel>
+              <IonLabel>Configuración</IonLabel>
             </IonTabButton>
           </IonTabBar>
         </IonTabs>
