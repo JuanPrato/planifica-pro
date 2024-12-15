@@ -6,6 +6,7 @@ import { getDayDetails } from '../api/days.api'
 import { DayDetails } from '../types'
 import { ActivityItem } from '../components/activity-item.component'
 import { add } from 'ionicons/icons'
+import NewActivityModal from '../components/new-activity.component'
 
 const DayPage: React.FC<RouteComponentProps<{ date: string }>> = ({ match }) => {
 
@@ -34,9 +35,10 @@ const DayPage: React.FC<RouteComponentProps<{ date: string }>> = ({ match }) => 
         ))}
         <IonFab horizontal="end" vertical="bottom">
           <IonFabButton color='secondary'>
-            <IonIcon icon={add}></IonIcon>
+            <IonIcon icon={add} id="open-modal"></IonIcon>
           </IonFabButton>
         </IonFab>
+        <NewActivityModal />
       </IonContent>
     </IonPage>
   )
