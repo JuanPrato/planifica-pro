@@ -7,6 +7,10 @@ function NewActivityModal() {
 
   const modal = useRef<HTMLIonModalElement>(null);
 
+  async function onSubmit() {
+
+  }
+
   return (
     <IonModal ref={modal} trigger="open-modal" initialBreakpoint={.5} breakpoints={[0, 1]}>
       <div className="block ion-margin-top form-container">
@@ -17,12 +21,12 @@ function NewActivityModal() {
               <IonInput label="Nombre de la tarea" labelPlacement='floating' />
             </IonItem>
             <IonItem>
-              <IonInput label="Duración" labelPlacement='floating' />
+              <IonInput label="Duración" labelPlacement='floating' type='number' />
             </IonItem>
             <IonItem>
               <IonToggle checked={true} color="secondary">Es la tarea principal?</IonToggle>
             </IonItem>
-            <IonButton expand='full' color="secondary">Guardar tarea</IonButton>
+            <IonButton expand='full' color="secondary" onClick={onSubmit}>Guardar tarea</IonButton>
           </IonList>
         </form>
       </div>
