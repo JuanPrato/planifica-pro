@@ -43,8 +43,8 @@ import '@ionic/react/css/palettes/dark.system.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import DayPage from './pages/DayPage';
-import CalendarPage from './pages/CalendarPage';
+import DayPage from './pages/day.page';
+import CalendarPage from './pages/calendar.page';
 
 setupIonicReact();
 
