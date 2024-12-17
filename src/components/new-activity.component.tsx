@@ -17,7 +17,7 @@ type Values = {
 const schema = object({
   title: string()
     .min(3, "El titulo debe tener entre 3 y 15 caracteres")
-    .max(15, "El titulo debe tener entre 3 y 15 caracteres")
+    .max(25, "El titulo debe tener entre 3 y 25 caracteres")
     .required("El titulo es obligatorio"),
   duration: number()
     .min(0, "La duración no puede ser menor a 0")
@@ -38,6 +38,7 @@ function NewActivityModal({ date }: { date: Dayjs }) {
 
   async function onSubmit(values: Values) {
     addActivity(date, {
+      id: 0,
       completed: false,
       primary: values.principal,
       time: values.duration,

@@ -1,4 +1,4 @@
-import { IonPage, IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonContent, IonFab, IonFabButton, IonIcon } from '@ionic/react'
+import { IonPage, IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonContent, IonFab, IonFabButton, IonIcon, useIonToast } from '@ionic/react'
 import dayjs from 'dayjs'
 import React, { useEffect, useState } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
@@ -14,6 +14,8 @@ const DayPage: React.FC<RouteComponentProps<{ date: string }>> = ({ match }) => 
 
   const day = dayjs(match.params.date);
   const data = useDayStore((state) => state.getDayData(day));
+  const deleteActivity = useDayStore((state) => state.deleteActivity);
+  const [notification] = useIonToast();
 
   const [selected, setSelected] = useState<Activity | undefined>();
 
@@ -22,11 +24,14 @@ const DayPage: React.FC<RouteComponentProps<{ date: string }>> = ({ match }) => 
   }
 
   function onDeleteResult(success: boolean) {
-    if (success) {
-      alert("ELIMINAO");
+    if (success && selected) {
+      deleteActivity(day, selected);
+      notification({
+        message: "Se ha eliminado con éxito",
+        duration: 1500
+      });
     }
     setSelected(undefined);
-
   }
 
   return (

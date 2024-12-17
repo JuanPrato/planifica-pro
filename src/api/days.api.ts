@@ -18,7 +18,7 @@ const tareas = [
 
 export async function getDaysList(dates: Dayjs[]): Promise<DayDetails[]> {
   const resolve = await Promise.all(
-    dates.map(async (day) => {
+    dates.map(async (day, i) => {
       const saved = await getDayDetails(day);
 
       if (saved) return saved;
@@ -31,6 +31,7 @@ export async function getDaysList(dates: Dayjs[]): Promise<DayDetails[]> {
             const time = Math.floor(Math.random() * 30 + 30);
 
             return {
+              id: i * 5 + j,
               title: tareas[Math.floor(Math.random() * tareas.length)],
               primary: j === 0,
               time,
@@ -77,7 +78,17 @@ export async function addActivity(date: Dayjs, activity: Activity) {
 
   if (!day) return;
 
-  day.activities.push(activity);
+  day.activities.push({ ...activity, id: Math.floor(Math.random() + 500) });
+
+  saveDay(day);
+}
+
+export async function deleteActivity(date: Dayjs, activity: Activity) {
+  const day = await getDayDetails(date);
+
+  if (!day) return;
+
+  day.activities = day.activities.filter((a) => a.id !== activity.id);
 
   saveDay(day);
 }

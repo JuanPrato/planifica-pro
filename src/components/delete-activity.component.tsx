@@ -1,5 +1,5 @@
 import { IonAlert } from '@ionic/react';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Activity } from '../types';
 
 import "./delete-activity.component.css"
@@ -10,10 +10,19 @@ interface Props {
 }
 
 function DeleteActivity({ activity, onResult }: Props) {
+
+  const [data, setData] = useState(activity);
+
+  useEffect(() => {
+    if (activity) {
+      setData(activity);
+    }
+  }, [activity]);
+
   return (
     <IonAlert
       header="Seguro que desea eliminar la actividad?"
-      message={`Se borrara "${activity?.title}"`}
+      message={`Se borrara "${data?.title}"`}
       isOpen={activity !== undefined}
       buttons={[
         {

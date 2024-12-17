@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { Activity, DayDetails } from "../types";
 import type { Dayjs } from "dayjs";
-import { addActivity, getDaysList } from "../api/days.api";
+import { addActivity, deleteActivity, getDaysList } from "../api/days.api";
 import { formatToKey } from "../util/time.util";
 
 interface DayState {
@@ -9,6 +9,7 @@ interface DayState {
   dates: Dayjs[];
   updateDaysData: (dates: Dayjs[]) => void;
   addActivity: (date: Dayjs, activity: Activity) => void;
+  deleteActivity: (date: Dayjs, activity: Activity) => void;
   getDayData: (date: Dayjs) => DayDetails | null;
 }
 
@@ -21,6 +22,10 @@ export const useDayStore = create<DayState>((set, get) => ({
   },
   async addActivity(date, activity) {
     await addActivity(date, activity);
+    get().updateDaysData(get().dates);
+  },
+  async deleteActivity(date: Dayjs, activity: Activity) {
+    await deleteActivity(date, activity);
     get().updateDaysData(get().dates);
   },
   getDayData(date) {
