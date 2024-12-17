@@ -7,15 +7,12 @@ import { DayDetails } from '../types'
 import { ActivityItem } from '../components/activity-item.component'
 import { add } from 'ionicons/icons'
 import NewActivityModal from '../components/new-activity.component'
+import { useDayStore } from '../store/day.store'
 
 const DayPage: React.FC<RouteComponentProps<{ date: string }>> = ({ match }) => {
 
   const day = dayjs(match.params.date);
-  const [data, setData] = useState<DayDetails | null>(null);
-
-  useEffect(() => {
-    getDayDetails(day).then(d => setData(d));
-  }, []);
+  const data = useDayStore((state) => state.getDayData(day));
 
   return (
     <IonPage>
@@ -38,7 +35,7 @@ const DayPage: React.FC<RouteComponentProps<{ date: string }>> = ({ match }) => 
             <IonIcon icon={add} id="open-modal"></IonIcon>
           </IonFabButton>
         </IonFab>
-        <NewActivityModal />
+        <NewActivityModal date={day} />
       </IonContent>
     </IonPage>
   )

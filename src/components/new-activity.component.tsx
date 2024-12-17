@@ -4,6 +4,9 @@ import React, { FormEvent, useRef } from 'react'
 import "./new-activity.component.css";
 import { boolean, number, object, string } from 'yup';
 import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
+import { addActivity } from '../api/days.api';
+import type { Dayjs } from 'dayjs';
+import { useDayStore } from '../store/day.store';
 
 type Values = {
   title: string;
@@ -28,12 +31,20 @@ const getInitialValues = () => ({
   principal: false
 })
 
-function NewActivityModal() {
+function NewActivityModal({ date }: { date: Dayjs }) {
 
   const modal = useRef<HTMLIonModalElement>(null);
+  const addActivity = useDayStore((state) => state.addActivity);
 
   async function onSubmit(values: Values) {
-    alert(JSON.stringify(values));
+    addActivity(date, {
+      completed: false,
+      primary: values.principal,
+      time: values.duration,
+      title: values.title,
+      timeUsed: 0
+    });
+    modal.current?.dismiss();
   }
 
   return (
@@ -49,7 +60,7 @@ function NewActivityModal() {
             <IonList>
               <IonItem>
                 <Field name="title">
-                  {({ field, form, meta }: FieldProps) => (
+                  {({ field, meta }: FieldProps) => (
                     <IonInput
                       label="Nombre de la tarea"
                       labelPlacement='floating'
@@ -64,7 +75,7 @@ function NewActivityModal() {
               </IonItem>
               <IonItem>
                 <Field name="duration">
-                  {({ field, form, meta }: FieldProps) => (
+                  {({ field, meta }: FieldProps) => (
                     <IonInput
                       label="Duración"
                       labelPlacement='floating'
@@ -79,19 +90,17 @@ function NewActivityModal() {
                 </Field>
               </IonItem>
               <IonItem>
-                <Field name="principal">
-                  {({ field, form, meta }: FieldProps) => {
-                    console.log({ field, form, meta, val: meta.value })
-                    return (
-                      <IonToggle
-                        color="secondary"
-                        name='principal'
-                        onIonChange={({ isTrusted }) => field.onChange(isTrusted)}
-                      >
-                        Es la tarea principal?
-                      </IonToggle>
-                    )
-                  }}
+                <Field name="principal" type="checkbox">
+                  {({ field, form }: FieldProps) => (
+                    <IonToggle
+                      color="secondary"
+                      name='principal'
+                      onIonChange={({ target }) => form.setFieldValue(field.name, target.checked)}
+                    >
+                      Es la tarea principal?
+                    </IonToggle>
+                  )
+                  }
                 </Field>
                 <ErrorMessage name='principal' />
               </IonItem>

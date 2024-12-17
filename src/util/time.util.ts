@@ -11,3 +11,7 @@ export function getFormattedTimeForActivities(activities: Activity[]) {
 
   return dayjs().startOf("day").add(totalTime, "minutes").format("HH[h] mm[m]");
 }
+
+export function formatToKey(day: Dayjs) {
+  return day.format("YYYY-DD-MM");
+}
