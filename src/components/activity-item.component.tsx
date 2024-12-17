@@ -1,6 +1,6 @@
 import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonIcon, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonProgressBar, IonRow } from "@ionic/react";
 import { Activity } from "../types";
-import { getFormattedTimeForActivities } from "../util/time.util";
+import { formatToKey, getFormattedTimeForActivities } from "../util/time.util";
 
 import "./activity-item.component.css";
 import { time } from "ionicons/icons";
@@ -31,7 +31,7 @@ export function ActivityItem({ activity, onDelete }: { activity: Activity, onDel
 
   return (
     <IonItemSliding ref={sliding} onIonDrag={onDrag}>
-      <IonItem>
+      <IonItem button href={`/calendar/day/${formatToKey(activity.date)}/activity/${activity.id}`}>
         <IonCard color="secondary" className={activity.primary ? "primary" : ""}>
           <IonCardHeader>
             <IonCardTitle>{activity.title}</IonCardTitle>

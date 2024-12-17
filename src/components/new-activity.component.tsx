@@ -37,13 +37,14 @@ function NewActivityModal({ date }: { date: Dayjs }) {
   const addActivity = useDayStore((state) => state.addActivity);
 
   async function onSubmit(values: Values) {
-    addActivity(date, {
+    addActivity({
       id: 0,
       completed: false,
       primary: values.principal,
       time: values.duration,
       title: values.title,
-      timeUsed: 0
+      timeUsed: 0,
+      date
     });
     modal.current?.dismiss();
   }

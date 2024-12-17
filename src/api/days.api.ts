@@ -37,6 +37,7 @@ export async function getDaysList(dates: Dayjs[]): Promise<DayDetails[]> {
               time,
               completed,
               timeUsed: completed ? time : Math.floor(Math.random() * 30 + 30),
+              date: day,
             };
           }
         ),
@@ -59,11 +60,13 @@ export async function getDayDetails(date: Dayjs) {
 
   if (value === null) return value;
 
-  const data = JSON.parse(value);
+  const data = JSON.parse(value) as DayDetails;
 
   data.date = dayjs(data.date);
 
-  return data as DayDetails;
+  data.activities.forEach((a) => (a.date = dayjs(a.date)));
+
+  return data;
 }
 
 function saveDay(day: DayDetails) {
@@ -73,8 +76,8 @@ function saveDay(day: DayDetails) {
   });
 }
 
-export async function addActivity(date: Dayjs, activity: Activity) {
-  const day = await getDayDetails(date);
+export async function addActivity(activity: Activity) {
+  const day = await getDayDetails(activity.date);
 
   if (!day) return;
 

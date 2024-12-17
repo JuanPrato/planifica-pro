@@ -8,7 +8,7 @@ interface DayState {
   days: DayDetails[];
   dates: Dayjs[];
   updateDaysData: (dates: Dayjs[]) => void;
-  addActivity: (date: Dayjs, activity: Activity) => void;
+  addActivity: (activity: Activity) => void;
   deleteActivity: (date: Dayjs, activity: Activity) => void;
   getDayData: (date: Dayjs) => DayDetails | null;
 }
@@ -20,8 +20,8 @@ export const useDayStore = create<DayState>((set, get) => ({
     const data = await getDaysList(dates);
     set(() => ({ days: data, dates }));
   },
-  async addActivity(date, activity) {
-    await addActivity(date, activity);
+  async addActivity(activity) {
+    await addActivity(activity);
     get().updateDaysData(get().dates);
   },
   async deleteActivity(date: Dayjs, activity: Activity) {

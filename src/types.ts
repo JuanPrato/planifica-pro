@@ -7,6 +7,7 @@ export type Activity = {
   primary: boolean;
   completed: boolean;
   timeUsed?: number;
+  date: Dayjs;
 };
 
 export type DayDetails = {
