@@ -3,16 +3,31 @@ import dayjs from 'dayjs'
 import React, { useEffect, useState } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import { getDayDetails } from '../api/days.api'
-import { DayDetails } from '../types'
+import { Activity, DayDetails } from '../types'
 import { ActivityItem } from '../components/activity-item.component'
 import { add } from 'ionicons/icons'
 import NewActivityModal from '../components/new-activity.component'
 import { useDayStore } from '../store/day.store'
+import DeleteActivity from '../components/delete-activity.component'
 
 const DayPage: React.FC<RouteComponentProps<{ date: string }>> = ({ match }) => {
 
   const day = dayjs(match.params.date);
   const data = useDayStore((state) => state.getDayData(day));
+
+  const [selected, setSelected] = useState<Activity | undefined>();
+
+  function onDelete(activity: Activity) {
+    setSelected(activity);
+  }
+
+  function onDeleteResult(success: boolean) {
+    if (success) {
+      alert("ELIMINAO");
+    }
+    setSelected(undefined);
+
+  }
 
   return (
     <IonPage>
@@ -28,7 +43,7 @@ const DayPage: React.FC<RouteComponentProps<{ date: string }>> = ({ match }) => 
       <IonContent>
         <br />
         {data?.activities.map(act => (
-          <ActivityItem activity={act} />
+          <ActivityItem activity={act} onDelete={onDelete} />
         ))}
         <IonFab horizontal="end" vertical="bottom">
           <IonFabButton color='secondary'>
@@ -36,6 +51,7 @@ const DayPage: React.FC<RouteComponentProps<{ date: string }>> = ({ match }) => 
           </IonFabButton>
         </IonFab>
         <NewActivityModal date={day} />
+        <DeleteActivity activity={selected} onResult={onDeleteResult} />
       </IonContent>
     </IonPage>
   )

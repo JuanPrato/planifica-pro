@@ -6,7 +6,6 @@ import DayItem from '../components/DayItem';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { getStartOfWeek } from '../util/time.util';
-import { DayDetails } from '../types';
 import { useDayStore } from '../store/day.store';
 import { Preferences } from '@capacitor/preferences';
 
@@ -28,10 +27,12 @@ const CalendarPage: React.FC = () => {
 
   useEffect(() => {
     updateDaysData(getWeekdays(week));
-  }, [week]);
+  }, []);
 
   function updateWeek(plus: number) {
-    setWeek(getStartOfWeek(week.add(plus, "week")))
+    const w = getStartOfWeek(week.add(plus, "week"));
+    setWeek(w);
+    updateDaysData(getWeekdays(w));
   }
 
   return (

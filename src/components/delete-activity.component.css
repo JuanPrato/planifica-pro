@@ -1,0 +1,7 @@
+button.alert-button.alert-button-cancel {
+  color: black !important;
+}
+
+button.alert-button.alert-button-success {
+  color: var(--ion-color-danger) !important;
+}
