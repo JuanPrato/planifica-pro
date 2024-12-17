@@ -5,3 +5,7 @@
 .title {
   text-align: center;
 }
+
+ion-list {
+  gap: 10px;
+}

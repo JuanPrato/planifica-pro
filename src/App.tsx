@@ -49,7 +49,6 @@ import CalendarPage from './pages/CalendarPage';
 setupIonicReact();
 
 const App: React.FC = () => {
-  console.log("h");
   return (
     <IonApp>
       <IonReactRouter>
