@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { getStartOfWeek } from '../util/time.util';
 import { DayDetails } from '../types';
 import { useDayStore } from '../store/day.store';
+import { Preferences } from '@capacitor/preferences';
 
 function getWeekdays(initialDate?: dayjs.Dayjs) {
   const now = dayjs(initialDate);
@@ -62,6 +63,7 @@ const CalendarPage: React.FC = () => {
             ))
           }
         </IonList>
+        {/* <IonButton onClick={() => Preferences.clear()} /> */}
       </IonContent>
     </IonPage>
   );
