@@ -1,6 +1,11 @@
 import type { Dayjs } from "dayjs";
 import { Activity } from "../types";
 import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+
+dayjs.extend(customParseFormat);
+
+export const TIME_FORMAT = "YYYY-DD-MM";
 
 export function getStartOfWeek(d: Dayjs) {
   return d.startOf("week");
@@ -12,6 +17,10 @@ export function getFormattedTimeForActivities(activities: Activity[]) {
   return dayjs().startOf("day").add(totalTime, "minutes").format("HH[h] mm[m]");
 }
 
+export function fromKey(key: string) {
+  return dayjs(key, TIME_FORMAT);
+}
+
 export function formatToKey(day: Dayjs) {
-  return day.format("YYYY-DD-MM");
+  return day.format(TIME_FORMAT);
 }

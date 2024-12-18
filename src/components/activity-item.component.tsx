@@ -31,7 +31,7 @@ export function ActivityItem({ activity, onDelete }: { activity: Activity, onDel
 
   return (
     <IonItemSliding ref={sliding} onIonDrag={onDrag}>
-      <IonItem button href={`/calendar/day/${formatToKey(activity.date)}/activity/${activity.id}`}>
+      <IonItem button routerLink={`/calendar/day/${formatToKey(activity.date)}/activity/${activity.id}`}>
         <IonCard color="secondary" className={activity.primary ? "primary" : ""}>
           <IonCardHeader>
             <IonCardTitle>{activity.title}</IonCardTitle>

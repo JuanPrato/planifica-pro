@@ -4,7 +4,7 @@ import { starOutline, star, starSharp } from 'ionicons/icons';
 import { DayDetails } from '../types';
 
 import "./DayItem.css";
-import { getFormattedTimeForActivities } from '../util/time.util';
+import { formatToKey, getFormattedTimeForActivities } from '../util/time.util';
 
 export default function DayItem({ day: { date, activities } }: { day: DayDetails }) {
 
@@ -19,7 +19,7 @@ export default function DayItem({ day: { date, activities } }: { day: DayDetails
   }
 
   return (
-    <IonItem button routerLink={`/calendar/day/${date.format('YYYY-MM-DD')}`} >
+    <IonItem button routerLink={`/calendar/day/${formatToKey(date)}`} >
       <IonGrid fixed>
         <IonRow className="ion-align-items-center">
           <IonCol className='date' size='2'>
