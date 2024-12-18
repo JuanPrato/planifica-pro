@@ -7,6 +7,7 @@ import { useDayStore } from '../store/day.store';
 import "./activity.page.css";
 import Timer from '../components/timer.component';
 import { playOutline, refreshOutline } from 'ionicons/icons';
+import ActivityTimerCard from '../components/activity-timer-card.component';
 
 interface Params { date: string, activityId: string };
 
@@ -38,27 +39,7 @@ const ActivityPage: React.FC<RouteComponentProps<Params>> = ({ match, history })
       </IonHeader>
       <IonContent>
         <IonItem lines='none'>
-          <IonCard color="secondary">
-            <IonCardHeader>
-              <IonCardTitle>Temporizador</IonCardTitle>
-            </IonCardHeader>
-            <IonCardContent>
-              <div className='content-container'>
-                <Timer activity={activity} />
-                <div>
-                  <IonButton>
-                    <IonIcon slot='start' icon={playOutline} size='small' />
-                    Iniciar
-                  </IonButton>
-                  <IonButton>
-                    <IonIcon slot='start' icon={refreshOutline} size='small' />
-                    Reiniciar
-                  </IonButton>
-                </div>
-                <IonToggle labelPlacement='end'>Agregar descansos</IonToggle>
-              </div>
-            </IonCardContent>
-          </IonCard>
+          <ActivityTimerCard activity={activity} />
         </IonItem>
       </IonContent>
     </IonPage>

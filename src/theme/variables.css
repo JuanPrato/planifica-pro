@@ -2,19 +2,19 @@
 http://ionicframework.com/docs/theming/ */
 
 :root {
-  --ion-color-primary: #f2ecff;
+  --ion-color-primary: #fcfbfe;
   --ion-color-primary-rgb: 242, 236, 255;
   --ion-color-primary-contrast: #000000;
   --ion-color-primary-contrast-rgb: 0, 0, 0;
   --ion-color-primary-shade: #c59cb3;
   --ion-color-primary-tint: #e3b9d0;
 
-  --ion-color-secondary: #c7adff;
-  --ion-color-secondary-rgb: 190, 149, 196;
+  --ion-color-secondary: #e0d1ff;
+  --ion-color-secondary-rgb: 224, 209, 255;
   --ion-color-secondary-contrast: #000000;
   --ion-color-secondary-contrast-rgb: 0, 0, 0;
-  --ion-color-secondary-shade: #a783ac;
-  --ion-color-secondary-tint: #c5a0ca;
+  --ion-color-secondary-shade: #c5b8e0;
+  --ion-color-secondary-tint: #e3d6ff;
 
   --ion-color-tertiary: #d5c2ff;
   --ion-color-tertiary-rgb: 159, 134, 192;

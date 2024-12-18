@@ -11,11 +11,11 @@
 }
 
 .inner-circle {
-  stroke: var(--ion-color-tertiary-shade);
+  stroke: var(--ion-color-primary);
 }
 
 .progress-circle {
-  stroke: var(--ion-color-primary-contrast);
+  stroke: var(--ion-color-primary-shade);
   transform: rotate(-90deg);
   transform-origin: 50% 50%;
   transition: all 0.5s linear;

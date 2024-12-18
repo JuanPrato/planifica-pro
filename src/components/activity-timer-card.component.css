@@ -1,0 +1,11 @@
+.chip-work {
+  --background: var(--ion-color-primary-tint);
+}
+
+.chip-rest {
+  /* --background: var(--ion-color-primary-tint); */
+}
+
+.timeline {
+  background-color: var(--ion-color-primary);
+}
