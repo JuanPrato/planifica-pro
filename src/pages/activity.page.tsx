@@ -8,6 +8,7 @@ import "./activity.page.css";
 import Timer from '../components/timer.component';
 import { playOutline, refreshOutline } from 'ionicons/icons';
 import ActivityTimerCard from '../components/activity-timer-card.component';
+import ActivityDetailsCard from '../components/activity-details-card.component';
 
 interface Params { date: string, activityId: string };
 
@@ -40,6 +41,9 @@ const ActivityPage: React.FC<RouteComponentProps<Params>> = ({ match, history })
       <IonContent>
         <IonItem lines='none'>
           <ActivityTimerCard activity={activity} />
+        </IonItem>
+        <IonItem lines="none">
+          <ActivityDetailsCard activity={activity} />
         </IonItem>
       </IonContent>
     </IonPage>
