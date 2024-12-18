@@ -1,0 +1,22 @@
+ion-title {
+  white-space: wrap;
+}
+
+ion-card {
+  width: 100%;
+}
+
+ion-content {
+  justify-content: center;
+  align-items: center;
+}
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+ion-toggle {
+  width: unset;
+}

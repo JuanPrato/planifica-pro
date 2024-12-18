@@ -1,0 +1,22 @@
+.container {
+  position: relative;
+  width: 85%;
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
+}
+
+.time-text {
+  font-weight: bold;
+  font-size: xx-large;
+}
+
+.inner-circle {
+  stroke: var(--ion-color-tertiary-shade);
+}
+
+.progress-circle {
+  stroke: var(--ion-color-primary-contrast);
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+  transition: all 0.5s linear;
+}

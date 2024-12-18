@@ -1,8 +1,12 @@
-import { IonBackButton, IonButtons, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonContent, IonHeader, IonIcon, IonItem, IonPage, IonTitle, IonToggle, IonToolbar } from '@ionic/react';
 import React from 'react'
 import { RouteComponentProps } from 'react-router-dom';
 import { fromKey } from '../util/time.util';
 import { useDayStore } from '../store/day.store';
+
+import "./activity.page.css";
+import Timer from '../components/timer.component';
+import { playOutline, refreshOutline } from 'ionicons/icons';
 
 interface Params { date: string, activityId: string };
 
@@ -17,6 +21,11 @@ const ActivityPage: React.FC<RouteComponentProps<Params>> = ({ match, history })
 
   const activity = data.activities.filter(a => a.id === Number(match.params.activityId)).at(0);
 
+  if (!activity) {
+    history.goBack();
+    return;
+  }
+
   return (
     <IonPage>
       <IonHeader>
@@ -24,11 +33,33 @@ const ActivityPage: React.FC<RouteComponentProps<Params>> = ({ match, history })
           <IonButtons slot="start">
             <IonBackButton />
           </IonButtons>
-          <IonTitle>{activity?.title}</IonTitle>
+          <IonTitle >{activity?.title}</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
-
+        <IonItem lines='none'>
+          <IonCard color="secondary">
+            <IonCardHeader>
+              <IonCardTitle>Temporizador</IonCardTitle>
+            </IonCardHeader>
+            <IonCardContent>
+              <div className='content-container'>
+                <Timer activity={activity} />
+                <div>
+                  <IonButton>
+                    <IonIcon slot='start' icon={playOutline} size='small' />
+                    Iniciar
+                  </IonButton>
+                  <IonButton>
+                    <IonIcon slot='start' icon={refreshOutline} size='small' />
+                    Reiniciar
+                  </IonButton>
+                </div>
+                <IonToggle labelPlacement='end'>Agregar descansos</IonToggle>
+              </div>
+            </IonCardContent>
+          </IonCard>
+        </IonItem>
       </IonContent>
     </IonPage>
   )
