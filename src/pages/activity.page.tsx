@@ -1,4 +1,4 @@
-import { IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonContent, IonHeader, IonIcon, IonItem, IonPage, IonTitle, IonToggle, IonToolbar } from '@ionic/react';
+import { IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonItem, IonPage, IonTitle, IonToggle, IonToolbar } from '@ionic/react';
 import React from 'react'
 import { RouteComponentProps } from 'react-router-dom';
 import { fromKey } from '../util/time.util';
@@ -6,9 +6,10 @@ import { useDayStore } from '../store/day.store';
 
 import "./activity.page.css";
 import Timer from '../components/timer.component';
-import { playOutline, refreshOutline } from 'ionicons/icons';
+import { createOutline, playOutline, refreshOutline } from 'ionicons/icons';
 import ActivityTimerCard from '../components/activity-timer-card.component';
 import ActivityDetailsCard from '../components/activity-details-card.component';
+import NewNoteModal from '../components/new-note-modal.component';
 
 interface Params { date: string, activityId: string };
 
@@ -38,13 +39,19 @@ const ActivityPage: React.FC<RouteComponentProps<Params>> = ({ match, history })
           <IonTitle >{activity?.title}</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent>
+      <IonContent fixedSlotPlacement="before">
         <IonItem lines='none'>
           <ActivityTimerCard activity={activity} />
         </IonItem>
         <IonItem lines="none">
           <ActivityDetailsCard activity={activity} />
         </IonItem>
+        <IonFab horizontal="end" vertical="bottom" slot="fixed">
+          <IonFabButton color="secondary" id="open-modal-note">
+            <IonIcon icon={createOutline}></IonIcon>
+          </IonFabButton>
+        </IonFab>
+        <NewNoteModal />
       </IonContent>
     </IonPage>
   )

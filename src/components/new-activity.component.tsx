@@ -59,7 +59,7 @@ function NewActivityModal({ date }: { date: Dayjs }) {
           validationSchema={schema}
         >
           <Form>
-            <IonList>
+            <IonList lines='none'>
               <IonItem>
                 <Field name="title">
                   {({ field, meta }: FieldProps) => (

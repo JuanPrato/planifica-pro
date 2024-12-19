@@ -50,8 +50,8 @@ const DayPage: React.FC<RouteComponentProps<{ date: string }>> = ({ match }) => 
           <ActivityItem activity={act} onDelete={onDelete} key={act.id} />
         ))}
         <IonFab horizontal="end" vertical="bottom">
-          <IonFabButton color='secondary'>
-            <IonIcon icon={add} id="open-modal"></IonIcon>
+          <IonFabButton color='secondary' id="open-modal">
+            <IonIcon icon={add}></IonIcon>
           </IonFabButton>
         </IonFab>
         <NewActivityModal date={day} />
