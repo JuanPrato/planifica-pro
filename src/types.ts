@@ -8,6 +8,12 @@ export type Activity = {
   completed: boolean;
   timeUsed?: number;
   date: Dayjs;
+  notes?: Note[];
+};
+
+export type Note = {
+  id: number;
+  note: string;
 };
 
 export type DayDetails = {

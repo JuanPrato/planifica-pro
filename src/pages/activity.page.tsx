@@ -10,6 +10,7 @@ import { createOutline, playOutline, refreshOutline } from 'ionicons/icons';
 import ActivityTimerCard from '../components/activity-timer-card.component';
 import ActivityDetailsCard from '../components/activity-details-card.component';
 import NewNoteModal from '../components/new-note-modal.component';
+import ActivityNoteCard from '../components/activity-notes-card.component';
 
 interface Params { date: string, activityId: string };
 
@@ -45,6 +46,9 @@ const ActivityPage: React.FC<RouteComponentProps<Params>> = ({ match, history })
         </IonItem>
         <IonItem lines="none">
           <ActivityDetailsCard activity={activity} />
+        </IonItem>
+        <IonItem lines='none'>
+          <ActivityNoteCard />
         </IonItem>
         <IonFab horizontal="end" vertical="bottom" slot="fixed">
           <IonFabButton color="secondary" id="open-modal-note">
