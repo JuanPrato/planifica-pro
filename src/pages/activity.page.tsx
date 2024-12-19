@@ -5,12 +5,12 @@ import { fromKey } from '../util/time.util';
 import { useDayStore } from '../store/day.store';
 
 import "./activity.page.css";
-import Timer from '../components/timer.component';
-import { createOutline, playOutline, refreshOutline } from 'ionicons/icons';
+import { createOutline, ellipsisHorizontalOutline } from 'ionicons/icons';
 import ActivityTimerCard from '../components/activity-timer-card.component';
 import ActivityDetailsCard from '../components/activity-details-card.component';
 import NewNoteModal from '../components/new-note-modal.component';
 import ActivityNoteCard from '../components/activity-notes-card.component';
+import ActivityOptions from '../components/activity-options.component';
 
 interface Params { date: string, activityId: string };
 
@@ -37,7 +37,10 @@ const ActivityPage: React.FC<RouteComponentProps<Params>> = ({ match, history })
           <IonButtons slot="start">
             <IonBackButton />
           </IonButtons>
-          <IonTitle >{activity?.title}</IonTitle>
+          <IonTitle>{activity?.title}</IonTitle>
+          <IonButtons slot='end'>
+            <ActivityOptions />
+          </IonButtons>
         </IonToolbar>
       </IonHeader>
       <IonContent fixedSlotPlacement="before">
