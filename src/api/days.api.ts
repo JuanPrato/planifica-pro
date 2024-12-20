@@ -28,7 +28,7 @@ export async function getDaysList(dates: Dayjs[]): Promise<DayDetails[]> {
         activities: Array.from({ length: Math.ceil(Math.random() * 5) }).map(
           (_, j) => {
             const completed = Math.random() > 0.5;
-            const time = Math.floor(Math.random() * 30 + 30);
+            const time = Math.floor(Math.random() * 30 + 300);
 
             return {
               id: i * 5 + j,

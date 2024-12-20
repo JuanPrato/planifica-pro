@@ -20,3 +20,7 @@
   transform-origin: 50% 50%;
   transition: all 0.5s linear;
 }
+
+.on-rest {
+  stroke: var(--ion-color-success);
+}

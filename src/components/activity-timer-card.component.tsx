@@ -18,18 +18,9 @@ const ActivityTimerCard = ({ activity }: Props) => {
       </IonCardHeader>
       <IonCardContent>
         <div className='content-container'>
-          <Timer activity={activity} />
-          <div>
-            <IonButton color="success">
-              <IonIcon slot='start' icon={playOutline} size='small' />
-              Iniciar
-            </IonButton>
-            <IonButton color="warning">
-              <IonIcon slot='start' icon={refreshOutline} size='small' />
-              Reiniciar
-            </IonButton>
-          </div>
-          <IonToggle labelPlacement='end'>Agregar descansos</IonToggle>
+          <Timer
+            initialData={{ totalTime: activity.time, timeUsed: activity.timeUsed }}
+          />
         </div>
       </IonCardContent>
     </IonCard>

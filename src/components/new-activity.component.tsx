@@ -41,7 +41,7 @@ function NewActivityModal({ date }: { date: Dayjs }) {
       id: 0,
       completed: false,
       primary: values.principal,
-      time: values.duration,
+      time: values.duration * 60,
       title: values.title,
       timeUsed: 0,
       date
