@@ -1,5 +1,5 @@
 import dayjs, { Dayjs } from "dayjs";
-import { Activity, DayDetails } from "../types";
+import { Activity, DayDetails, Note } from "../types";
 import { Preferences } from "@capacitor/preferences";
 import { formatToKey } from "../util/time.util";
 
@@ -92,6 +92,23 @@ export async function deleteActivity(date: Dayjs, activity: Activity) {
   if (!day) return;
 
   day.activities = day.activities.filter((a) => a.id !== activity.id);
+
+  saveDay(day);
+}
+
+export async function saveNote(activity: Activity, note: Note) {
+  const day = await getDayDetails(activity.date);
+
+  if (!day) return;
+
+  if (!activity.notes) {
+    activity.notes = [];
+  }
+  activity.notes.push(note);
+
+  day.activities = day.activities.map((a) =>
+    a.id === activity.id ? activity : a
+  );
 
   saveDay(day);
 }

@@ -1,7 +1,12 @@
 import { create } from "zustand";
-import { Activity, DayDetails } from "../types";
+import { Activity, DayDetails, Note } from "../types";
 import type { Dayjs } from "dayjs";
-import { addActivity, deleteActivity, getDaysList } from "../api/days.api";
+import {
+  addActivity,
+  deleteActivity,
+  getDaysList,
+  saveNote,
+} from "../api/days.api";
 import { formatToKey } from "../util/time.util";
 
 interface DayState {
@@ -11,6 +16,7 @@ interface DayState {
   addActivity: (activity: Activity) => void;
   deleteActivity: (date: Dayjs, activity: Activity) => void;
   getDayData: (date: Dayjs) => DayDetails | null;
+  addNote: (activity: Activity, note: Note) => void;
 }
 
 export const useDayStore = create<DayState>((set, get) => ({
@@ -32,5 +38,9 @@ export const useDayStore = create<DayState>((set, get) => ({
     return (
       get().days.find((d) => formatToKey(d.date) === formatToKey(date)) ?? null
     );
+  },
+  async addNote(activity: Activity, note: Note) {
+    await saveNote(activity, note);
+    this.updateDaysData(get().dates);
   },
 }));

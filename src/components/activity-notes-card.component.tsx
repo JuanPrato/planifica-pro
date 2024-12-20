@@ -18,8 +18,13 @@ function ActivityNoteCard({ notes }: Props) {
         {
           (notes && notes.length > 0) ? (
             <IonList className='notes-list'>
-              <IonItem color='secondary'>
-              </IonItem>
+              {
+                notes.map(note => (
+                  <IonItem color='secondary'>
+                    <p>{note.note}</p>
+                  </IonItem>
+                ))
+              }
             </IonList>
           ) : (
             <h2>Aún no tienes notas en esta actividad</h2>

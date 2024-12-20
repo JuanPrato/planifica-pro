@@ -51,14 +51,14 @@ const ActivityPage: React.FC<RouteComponentProps<Params>> = ({ match, history })
           <ActivityDetailsCard activity={activity} />
         </IonItem>
         <IonItem lines='none'>
-          <ActivityNoteCard />
+          <ActivityNoteCard notes={activity.notes} />
         </IonItem>
         <IonFab horizontal="end" vertical="bottom" slot="fixed">
           <IonFabButton color="secondary" id="open-modal-note">
             <IonIcon icon={createOutline}></IonIcon>
           </IonFabButton>
         </IonFab>
-        <NewNoteModal />
+        <NewNoteModal activity={activity} />
       </IonContent>
     </IonPage>
   )
