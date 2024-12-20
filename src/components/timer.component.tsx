@@ -63,6 +63,8 @@ const Timer = ({ initialData: { totalTime: initialTotalTime, timeUsed }, onStop 
       if (working) {
         setCicles((c) => c - 1);
         setWorking(false);
+      } else {
+        setWorking(true);
       }
     }
   }
