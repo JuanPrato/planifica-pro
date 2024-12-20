@@ -20,7 +20,6 @@ const ActivityTimerCard = ({ activity }: Props) => {
     activity.completed = completed;
 
     addActivity(activity);
-
   }
 
   return (

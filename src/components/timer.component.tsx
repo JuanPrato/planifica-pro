@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react'
 
 import "./timer.component.css";
 import { formatTime } from '../util/time.util';
-import { IonButton, IonIcon, IonToggle } from '@ionic/react';
+import { IonButton, IonIcon, IonToggle, useIonRouter } from '@ionic/react';
 import { playOutline, refreshOutline } from 'ionicons/icons';
 import { useTimer } from '../hooks/timer.hook';
+import Confirmation from './confirmation.component';
 
 interface TimerProps {
   initialData: { totalTime: number, timeUsed?: number }
@@ -47,6 +48,10 @@ const Timer = ({ initialData: { totalTime: initialTotalTime, timeUsed }, onStop 
 
   const [totalTimeAcc, setTotalTimeAcc] = useState(timeUsed ?? 0);
 
+  const [restartModal, setRestartModal] = useState(false);
+
+  const router = useIonRouter();
+
   function onTick() {
     if (working) {
       setTotalTimeAcc((t) => t + 1);
@@ -87,6 +92,19 @@ const Timer = ({ initialData: { totalTime: initialTotalTime, timeUsed }, onStop 
   useEffect(() => {
     setCicles(getCicles(rests, initialTotalTime, time));
   }, [rests]);
+
+  function restart() {
+    setRestartModal(true);
+  }
+
+  function restartResult(ok: boolean) {
+    setRestartModal(false);
+
+    if (ok) {
+      onStop && onStop(false, 0);
+      router.goBack();
+    }
+  }
 
   return (
     <>
@@ -136,12 +154,18 @@ const Timer = ({ initialData: { totalTime: initialTotalTime, timeUsed }, onStop 
           <IonIcon slot='start' icon={playOutline} size='small' />
           {running ? "Pausar" : "Iniciar"}
         </IonButton>
-        <IonButton color="warning">
+        <IonButton color="warning" onClick={restart}>
           <IonIcon slot='start' icon={refreshOutline} size='small' />
           Reiniciar
         </IonButton>
       </div>
       <IonToggle labelPlacement='end' onIonChange={(v) => setRests(v.target.checked)}>Agregar descansos</IonToggle>
+      <Confirmation
+        onResult={restartResult}
+        title='Seguro que desea reiniciar el tiempo de esta actividad?'
+        message='Esta acción no puede deshacerse'
+        isOpen={restartModal}
+      />
     </>
   )
 }

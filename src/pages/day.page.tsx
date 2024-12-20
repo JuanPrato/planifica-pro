@@ -4,10 +4,10 @@ import React, { useState } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import { Activity } from '../types'
 import { ActivityItem } from '../components/activity-item.component'
-import { add } from 'ionicons/icons'
+import { accessibility, add } from 'ionicons/icons'
 import NewActivityModal from '../components/new-activity.component'
 import { useDayStore } from '../store/day.store'
-import DeleteActivity from '../components/delete-activity.component'
+import DeleteActivity from '../components/confirmation.component'
 import { fromKey } from '../util/time.util'
 
 const DayPage: React.FC<RouteComponentProps<{ date: string }>> = ({ match }) => {
@@ -55,7 +55,12 @@ const DayPage: React.FC<RouteComponentProps<{ date: string }>> = ({ match }) => 
           </IonFabButton>
         </IonFab>
         <NewActivityModal date={day} />
-        <DeleteActivity activity={selected} onResult={onDeleteResult} />
+        <DeleteActivity
+          onResult={onDeleteResult}
+          title={"Seguro que desea eliminar la actividad?"}
+          message={`Se borrara "${selected?.title}"`}
+          isOpen={selected !== undefined}
+        />
       </IonContent>
     </IonPage>
   )

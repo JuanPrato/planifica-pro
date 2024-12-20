@@ -32,9 +32,10 @@ export function useTimer(initialData: InitialTimer) {
       setTime((t) => t + 1);
     }, 1000);
 
+    if (!touch) setTouch(true);
+
     return () => {
       clearInterval(loop);
-      if (!touch) setTouch(true);
     };
   }, [running]);
 
