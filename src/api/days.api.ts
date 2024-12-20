@@ -81,7 +81,15 @@ export async function addActivity(activity: Activity) {
 
   if (!day) return;
 
-  day.activities.push({ ...activity, id: Math.floor(Math.random() + 500) });
+  const existingIndex = day.activities.findIndex(
+    (act) => act.id === activity.id
+  );
+
+  if (existingIndex === -1) {
+    day.activities.push({ ...activity, id: Math.floor(Math.random() + 500) });
+  } else {
+    day.activities = day.activities.with(existingIndex, activity);
+  }
 
   saveDay(day);
 }

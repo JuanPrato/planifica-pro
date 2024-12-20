@@ -19,7 +19,11 @@ const ActivityDetailsCard = ({ activity }: Props) => {
         </IonItem>
         <IonItem color="secondary" lines='none'>
           <IonIcon slot='start' icon={calendarOutline} />
-          <IonLabel>Restante: {activity.time - (activity.timeUsed || 0)} minutos</IonLabel>
+          <IonLabel>Restante: {
+            !activity.completed ? (`${activity.time - (activity.timeUsed || 0)} minutos`) : (
+              `Completado`
+            )
+          }</IonLabel>
         </IonItem>
       </IonCardContent>
     </IonCard>

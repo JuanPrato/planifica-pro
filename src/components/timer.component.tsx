@@ -8,7 +8,7 @@ import { time, playOutline, refreshOutline } from 'ionicons/icons';
 
 interface TimerProps {
   initialData: { totalTime: number, timeUsed?: number }
-  onStop?: () => void;
+  onStop?: (completed: boolean, timeUsed: number) => void;
 }
 
 const WORK_CIRCLE_TIME: number = 4;
@@ -26,21 +26,20 @@ const Timer = ({ initialData: { totalTime: initialTotalTime, timeUsed }, onStop 
   const [cicles, setCicles] = useState(1);
   const [working, setWorking] = useState(true);
 
+  const [totalTimeAcc, setTotalTimeAcc] = useState(timeUsed ?? 0);
+
   useEffect(() => {
-    if (cicles === 0) {
-      onStop && onStop();
+    if (cicles === 0 || !rests) {
       return;
     }
-    if (!rests) {
-      return;
-    }
+
     setTime(0);
     if (working) {
       setWorking(false);
       setTotalTime(REST_CIRCLE_TIME);
     } else {
       setWorking(true);
-      setTotalTime(WORK_CIRCLE_TIME);
+      setTotalTime(Math.round(WORK_CIRCLE_TIME * (Math.min(1, cicles))));
     }
   }, [cicles]);
 
@@ -48,7 +47,7 @@ const Timer = ({ initialData: { totalTime: initialTotalTime, timeUsed }, onStop 
     if (rests) {
       const cicles = (initialTotalTime - (timeUsed ?? 0)) / WORK_CIRCLE_TIME;
       setWorking(false);
-      setCicles(cicles * 2);
+      setCicles(cicles);
     } else {
       setTime(timeUsed || 0);
       setTotalTime(initialTotalTime);
@@ -60,17 +59,23 @@ const Timer = ({ initialData: { totalTime: initialTotalTime, timeUsed }, onStop 
     setPercentage(((time || 0) * 100) / totalTime);
     if (time >= totalTime) {
       setRunning(false);
-      setCicles(c => c - 1);
+      if (working) {
+        setCicles(c => c - 1);
+      }
     }
   }, [time, totalTime]);
 
   useEffect(() => {
     if (!running) {
-      onStop && onStop();
+      if (totalTimeAcc !== timeUsed)
+        onStop && onStop(cicles === 0, totalTimeAcc);
       return;
     }
     const loop = setInterval(() => {
       setTime(t => t + 1);
+      if (working) {
+        setTotalTimeAcc(t => t + 1);
+      }
     }, 1000);
 
     return () => clearInterval(loop);

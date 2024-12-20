@@ -5,12 +5,24 @@ import Timer from './timer.component';
 import { Activity } from '../types';
 
 import "./activity-timer-card.component.css";
+import { useDayStore } from '../store/day.store';
 
 interface Props {
   activity: Activity;
 }
 
 const ActivityTimerCard = ({ activity }: Props) => {
+
+  const addActivity = useDayStore((state) => state.addActivity);
+
+  function onStop(completed: boolean, timeUsed: number) {
+    activity.timeUsed = timeUsed;
+    activity.completed = completed;
+
+    addActivity(activity);
+
+  }
+
   return (
     <IonCard color="secondary">
       <IonCardHeader>
@@ -20,6 +32,7 @@ const ActivityTimerCard = ({ activity }: Props) => {
         <div className='content-container'>
           <Timer
             initialData={{ totalTime: activity.time, timeUsed: activity.timeUsed }}
+            onStop={onStop}
           />
         </div>
       </IonCardContent>
