@@ -39,7 +39,7 @@ const ActivityPage: React.FC<RouteComponentProps<Params>> = ({ match, history })
           </IonButtons>
           <IonTitle>{activity?.title}</IonTitle>
           <IonButtons slot='end'>
-            <ActivityOptions />
+            <ActivityOptions activity={activity} />
           </IonButtons>
         </IonToolbar>
       </IonHeader>
