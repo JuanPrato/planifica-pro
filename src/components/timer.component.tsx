@@ -58,10 +58,10 @@ const Timer = ({ initialData: { totalTime: initialTotalTime, timeUsed }, onStop 
     }
 
     if (time >= totalTime) {
+      console.log(working);
       play(false);
       if (working) {
         setCicles((c) => c - 1);
-      } else {
         setWorking(false);
       }
     }
