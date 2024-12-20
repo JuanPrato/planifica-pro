@@ -121,7 +121,7 @@ const Timer = ({ initialData: { totalTime: initialTotalTime, timeUsed }, onStop 
           <span className='time-text'>{formatTime(totalTime - time)}</span>
           {
             rests ? (
-              <h3>Ciclos restantes: {Math.ceil(cicles / 2)}</h3>
+              <h3>Ciclos restantes: {Math.ceil(cicles)}</h3>
             ) : (
               <h3 className=''>Total: {formatTime(totalTime)}</h3>
             )
