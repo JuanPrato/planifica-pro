@@ -41,6 +41,6 @@ export const useDayStore = create<DayState>((set, get) => ({
   },
   async addNote(activity: Activity, note: Note) {
     await saveNote(activity, note);
-    this.updateDaysData(get().dates);
+    get().updateDaysData(get().dates);
   },
 }));
