@@ -49,7 +49,7 @@ const DayPage: React.FC<RouteComponentProps<{ date: string }>> = ({ match }) => 
         {data?.activities.map(act => (
           <ActivityItem activity={act} onDelete={onDelete} key={act.id} />
         ))}
-        <IonFab horizontal="end" vertical="bottom">
+        <IonFab horizontal="end" vertical="bottom" slot='fixed'>
           <IonFabButton color='secondary' id="open-modal">
             <IonIcon icon={add}></IonIcon>
           </IonFabButton>
