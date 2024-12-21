@@ -76,22 +76,28 @@ function saveDay(day: DayDetails) {
   });
 }
 
-export async function addActivity(activity: Activity) {
+export async function addActivity(activity: Activity): Promise<number> {
+  let id = -1;
+
   const day = await getDayDetails(activity.date);
 
-  if (!day) return;
+  if (!day) return id;
 
   const existingIndex = day.activities.findIndex(
     (act) => act.id === activity.id
   );
 
   if (existingIndex === -1) {
-    day.activities.push({ ...activity, id: Math.floor(Math.random() + 500) });
+    id = Math.floor(Math.random() * 500);
+    day.activities.push({ ...activity, id });
   } else {
+    id = day.activities[existingIndex].id;
     day.activities = day.activities.with(existingIndex, activity);
   }
 
   saveDay(day);
+
+  return id;
 }
 
 export async function deleteActivity(date: Dayjs, activity: Activity) {

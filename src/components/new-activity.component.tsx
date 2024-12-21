@@ -4,7 +4,6 @@ import React, { FormEvent, useRef } from 'react'
 import "./new-activity.component.css";
 import { boolean, number, object, string } from 'yup';
 import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
-import { addActivity } from '../api/days.api';
 import type { Dayjs } from 'dayjs';
 import { useDayStore } from '../store/day.store';
 

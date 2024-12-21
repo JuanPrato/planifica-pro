@@ -10,8 +10,10 @@ import {
   setupIonicReact
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { ellipse, square, calendar, settingsOutline, flashOutline } from 'ionicons/icons';
-import Tab2 from './pages/Tab2';
+import { ellipse, square, calendar, settingsOutline, flashOutline, calendarOutline } from 'ionicons/icons';
+
+import CalendarPage from './pages/calendar.page';
+import QuickTaskPage from './pages/quick-task.page';
 import Tab3 from './pages/Tab3';
 
 /* Core CSS required for Ionic components to work properly */
@@ -43,8 +45,6 @@ import '@ionic/react/css/palettes/dark.system.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import DayPage from './pages/day.page';
-import CalendarPage from './pages/calendar.page';
 
 setupIonicReact();
 
@@ -57,8 +57,8 @@ const App: React.FC = () => {
             <Route path="/calendar"
               render={props => <CalendarPage {...props} />}
             />
-            <Route exact path="/tab2">
-              <Tab2 />
+            <Route exact path="/quick-task">
+              <QuickTaskPage />
             </Route>
             <Route path="/tab3">
               <Tab3 />
@@ -69,10 +69,10 @@ const App: React.FC = () => {
           </IonRouterOutlet>
           <IonTabBar slot="bottom" color="secondary">
             <IonTabButton tab="calendar" href="/calendar">
-              <IonIcon aria-hidden="true" icon={calendar} />
+              <IonIcon aria-hidden="true" icon={calendarOutline} />
               <IonLabel>Calendario</IonLabel>
             </IonTabButton>
-            <IonTabButton tab="tab2" href="/tab2">
+            <IonTabButton tab="quick-task" href="/quick-task">
               <IonIcon aria-hidden="true" icon={flashOutline} />
               <IonLabel>Tarea rápida</IonLabel>
             </IonTabButton>

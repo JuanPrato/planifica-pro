@@ -12,8 +12,8 @@ import { formatToKey } from "../util/time.util";
 interface DayState {
   days: DayDetails[];
   dates: Dayjs[];
-  updateDaysData: (dates: Dayjs[]) => void;
-  addActivity: (activity: Activity) => void;
+  updateDaysData: (dates: Dayjs[]) => Promise<void>;
+  addActivity: (activity: Activity) => Promise<number>;
   deleteActivity: (date: Dayjs, activity: Activity) => void;
   getDayData: (date: Dayjs) => DayDetails | null;
   addNote: (activity: Activity, note: Note) => void;
@@ -27,8 +27,9 @@ export const useDayStore = create<DayState>((set, get) => ({
     set(() => ({ days: data, dates }));
   },
   async addActivity(activity) {
-    await addActivity(activity);
-    get().updateDaysData(get().dates);
+    const id = await addActivity(activity);
+    await get().updateDaysData(get().dates);
+    return id;
   },
   async deleteActivity(date: Dayjs, activity: Activity) {
     await deleteActivity(date, activity);
