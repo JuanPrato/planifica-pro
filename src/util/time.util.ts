@@ -17,8 +17,11 @@ export function getFormattedTimeForActivities(activities: Activity[]) {
   return dayjs().startOf("day").add(totalTime, "minutes").format("HH[h] mm[m]");
 }
 
-export function formatTime(seconds: number) {
-  return dayjs().startOf("day").add(seconds, "seconds").format("mm[:]ss");
+export function formatTime(seconds: number, format?: string) {
+  return dayjs()
+    .startOf("day")
+    .add(seconds, "seconds")
+    .format(format ?? "mm[:]ss");
 }
 
 export function fromKey(key: string) {

@@ -15,7 +15,10 @@ function ActivityOptions({ activity }: Props) {
   const router = useIonRouter();
 
   function markAsComplete() {
-    const act: Activity = { ...activity, completed: true, timeUsed: activity.time };
+    const act: Activity = {
+      ...activity,
+      completed: true
+    };
     addActivity(act);
     router.goBack();
   }

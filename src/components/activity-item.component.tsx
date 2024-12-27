@@ -1,9 +1,9 @@
 import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonIcon, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonProgressBar, IonRow } from "@ionic/react";
 import { Activity } from "../types";
-import { formatToKey, getFormattedTimeForActivities } from "../util/time.util";
+import { formatTime, formatToKey, getFormattedTimeForActivities } from "../util/time.util";
 
 import "./activity-item.component.css";
-import { time } from "ionicons/icons";
+import { checkmarkCircle, checkmarkCircleOutline, time } from "ionicons/icons";
 import { useRef } from "react";
 
 export function ActivityItem({ activity, onDelete }: { activity: Activity, onDelete: (a: Activity) => void }) {
@@ -40,24 +40,24 @@ export function ActivityItem({ activity, onDelete }: { activity: Activity, onDel
           <IonCardContent>
             <IonRow className="time-details">
               <IonRow className="time-remaining">
-                <IonIcon icon={time} size="small" />
+                <IonIcon icon={activity.completed ? checkmarkCircle : time} size="small" />
                 {
-                  timeRemaining >= 0 ? (
-                    <p>Tiempo restante: {timeRemaining} minutos</p>
+                  activity.completed ? (
+                    <p>Completada en: <strong>{formatTime(activity.timeUsed || 0)}</strong></p>
                   ) : (
-                    <p>Tiempo extra: {timeRemaining * -1} minutos</p>
+                    <p>Tiempo restante: <strong>{formatTime(timeRemaining)}</strong></p>
                   )
                 }
               </IonRow>
-              <p>{Math.round(percentage * 100)}% completado</p>
+              <p>Se uso {Math.round(percentage * 100)}%</p>
             </IonRow>
-            <IonProgressBar value={percentage} color={percentage >= 1 ? "success" : "light"}></IonProgressBar>
+            <IonProgressBar value={percentage} color={activity.completed ? "success" : "warning"}></IonProgressBar>
           </IonCardContent>
         </IonCard>
       </IonItem>
       <IonItemOptions side="end">
         <IonItemOption color="danger" expandable onClick={deleteActivity}>Borrar</IonItemOption>
       </IonItemOptions>
-    </IonItemSliding>
+    </IonItemSliding >
   )
 }
