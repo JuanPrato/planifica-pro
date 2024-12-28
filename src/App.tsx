@@ -14,7 +14,7 @@ import { settingsOutline, flashOutline, calendarOutline } from 'ionicons/icons';
 
 import CalendarPage from './pages/calendar.page';
 import QuickTaskPage from './pages/quick-task.page';
-import ProfilePage from './pages/profile.page';
+import SettingsPage from './pages/settings.page';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -76,8 +76,8 @@ const App: React.FC = () => {
             <Route exact path="/quick-task">
               <QuickTaskPage />
             </Route>
-            <Route path="/profile">
-              <ProfilePage />
+            <Route path="/settings">
+              <SettingsPage />
             </Route>
             <Route exact path="/">
               <Redirect to="/calendar" />
@@ -92,7 +92,7 @@ const App: React.FC = () => {
               <IonIcon aria-hidden="true" icon={flashOutline} />
               <IonLabel>Tarea rápida</IonLabel>
             </IonTabButton>
-            <IonTabButton tab="profile" href="/profile">
+            <IonTabButton tab="settings" href="/settings">
               <IonIcon aria-hidden="true" icon={settingsOutline} />
               <IonLabel>Configuración</IonLabel>
             </IonTabButton>

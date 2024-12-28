@@ -25,6 +25,7 @@ export const useUserStore = create<UserStoreState>()((set) => ({
   },
 }));
 
-FirebaseAuthentication.getCurrentUser().then((user) =>
-  useUserStore.setState({ user: user.user })
-);
+FirebaseAuthentication.getCurrentUser().then((user) => {
+  useUserStore.setState({ user: user.user });
+  console.log(user);
+});
