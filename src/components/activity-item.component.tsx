@@ -31,11 +31,11 @@ export function ActivityItem({ activity, onDelete }: { activity: Activity, onDel
 
   return (
     <IonItemSliding ref={sliding} onIonDrag={onDrag}>
-      <IonItem button routerLink={`/calendar/day/${formatToKey(activity.date)}/activity/${activity.id}`}>
+      <IonItem button routerLink={`/calendar/day/${formatToKey(activity.date)}/activity/${activity.id}`} className="activity-card">
         <IonCard color="secondary" className={activity.primary ? "primary" : ""}>
-          <IonCardHeader>
-            <IonCardTitle>{activity.title}</IonCardTitle>
-            <IonCardSubtitle>{getFormattedTimeForActivities([activity])}</IonCardSubtitle>
+          <IonCardHeader className="activity-card-header">
+            <IonCardTitle className="activity-card-title">{activity.title}</IonCardTitle>
+            <IonCardSubtitle className="activity-card-subtitle">{getFormattedTimeForActivities([activity])}</IonCardSubtitle>
           </IonCardHeader>
           <IonCardContent>
             <IonRow className="time-details">

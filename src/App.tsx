@@ -10,11 +10,11 @@ import {
   setupIonicReact
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { ellipse, square, calendar, settingsOutline, flashOutline, calendarOutline } from 'ionicons/icons';
+import { settingsOutline, flashOutline, calendarOutline } from 'ionicons/icons';
 
 import CalendarPage from './pages/calendar.page';
 import QuickTaskPage from './pages/quick-task.page';
-import Tab3 from './pages/Tab3';
+import ProfilePage from './pages/profile.page';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -48,6 +48,22 @@ import './theme/variables.css';
 
 setupIonicReact();
 
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyC_yltG9foB1zU1v_I_d3kmIGWqSHfTQig",
+  authDomain: "planifica-pro.firebaseapp.com",
+  projectId: "planifica-pro",
+  storageBucket: "planifica-pro.firebasestorage.app",
+  messagingSenderId: "321824242190",
+  appId: "1:321824242190:web:70c34279f8a4517c789a5f"
+};
+
+// Initialize Firebase
+initializeApp(firebaseConfig);
+
 const App: React.FC = () => {
   return (
     <IonApp>
@@ -60,8 +76,8 @@ const App: React.FC = () => {
             <Route exact path="/quick-task">
               <QuickTaskPage />
             </Route>
-            <Route path="/tab3">
-              <Tab3 />
+            <Route path="/profile">
+              <ProfilePage />
             </Route>
             <Route exact path="/">
               <Redirect to="/calendar" />
@@ -76,7 +92,7 @@ const App: React.FC = () => {
               <IonIcon aria-hidden="true" icon={flashOutline} />
               <IonLabel>Tarea rápida</IonLabel>
             </IonTabButton>
-            <IonTabButton tab="tab3" href="/tab3">
+            <IonTabButton tab="profile" href="/profile">
               <IonIcon aria-hidden="true" icon={settingsOutline} />
               <IonLabel>Configuración</IonLabel>
             </IonTabButton>
