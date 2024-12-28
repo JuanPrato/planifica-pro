@@ -4,6 +4,7 @@ export type Activity = {
   id: number;
   title: string;
   time: number;
+  maxTime: boolean;
   primary: boolean;
   completed: boolean;
   timeUsed?: number;

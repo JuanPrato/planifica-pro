@@ -9,3 +9,8 @@
 ion-list {
   gap: 10px;
 }
+
+.time-separator {
+  font-size: large;
+  font-weight: bolder;
+}

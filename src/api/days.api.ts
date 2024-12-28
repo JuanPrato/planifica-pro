@@ -38,6 +38,7 @@ export async function getDaysList(dates: Dayjs[]): Promise<DayDetails[]> {
               completed,
               timeUsed: completed ? time : Math.floor(Math.random() * 30 + 30),
               date: day,
+              maxTime: true,
             };
           }
         ),

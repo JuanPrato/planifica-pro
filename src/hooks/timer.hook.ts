@@ -5,6 +5,7 @@ interface InitialTimer {
   initialTime?: number;
   onTick: (value: number) => void;
   onStop: () => void;
+  forward?: boolean;
 }
 
 export function useTimer(initialData: InitialTimer) {

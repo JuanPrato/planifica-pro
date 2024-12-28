@@ -3,7 +3,7 @@ import { Activity } from "../types";
 import { formatTime, formatToKey, getFormattedTimeForActivities } from "../util/time.util";
 
 import "./activity-item.component.css";
-import { checkmarkCircle, checkmarkCircleOutline, time } from "ionicons/icons";
+import { checkmarkCircle, time } from "ionicons/icons";
 import { useRef } from "react";
 
 export function ActivityItem({ activity, onDelete }: { activity: Activity, onDelete: (a: Activity) => void }) {
@@ -45,11 +45,21 @@ export function ActivityItem({ activity, onDelete }: { activity: Activity, onDel
                   activity.completed ? (
                     <p>Completada en: <strong>{formatTime(activity.timeUsed || 0)}</strong></p>
                   ) : (
-                    <p>Tiempo restante: <strong>{formatTime(timeRemaining)}</strong></p>
+                    activity.maxTime ? (
+                      <p>Tiempo restante: <strong>{formatTime(timeRemaining)}</strong></p>
+                    ) : (
+                      <p>Se utilizo: <strong>{formatTime(activity.timeUsed || 0)}</strong></p>
+                    )
                   )
                 }
               </IonRow>
-              <p>Se uso {Math.round(percentage * 100)}%</p>
+              <p>{
+                activity.maxTime ? (
+                  `Se uso ${Math.round(percentage * 100)}%`
+                ) : (
+                  "-"
+                )
+              }</p>
             </IonRow>
             <IonProgressBar value={percentage} color={activity.completed ? "success" : "warning"}></IonProgressBar>
           </IonCardContent>

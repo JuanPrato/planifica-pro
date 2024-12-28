@@ -8,7 +8,7 @@ import { useTimer } from '../hooks/timer.hook';
 import Confirmation from './confirmation.component';
 
 interface TimerProps {
-  initialData: { totalTime: number, timeUsed?: number }
+  initialData: { totalTime: number, timeUsed?: number, forward?: boolean }
   onStop?: (completed: boolean, timeUsed: number) => void;
 }
 
@@ -39,7 +39,7 @@ function getCicles(rests: boolean, initialTotalTime: number, timeUsed?: number) 
 }
 
 
-const Timer = ({ initialData: { totalTime: initialTotalTime, timeUsed }, onStop }: TimerProps) => {
+const Timer = ({ initialData: { totalTime: initialTotalTime, timeUsed, forward }, onStop }: TimerProps) => {
 
   const [rests, setRests] = useState(false);
 
@@ -57,8 +57,9 @@ const Timer = ({ initialData: { totalTime: initialTotalTime, timeUsed }, onStop 
       setTotalTimeAcc((t) => t + 1);
     }
 
+    if (forward) return;
+
     if (time >= totalTime) {
-      console.log(working);
       play(false);
       if (working) {
         setCicles((c) => c - 1);
@@ -77,7 +78,8 @@ const Timer = ({ initialData: { totalTime: initialTotalTime, timeUsed }, onStop 
     time: initialTotalTime,
     initialTime: timeUsed,
     onTick,
-    onStop: onTimerStop
+    onStop: onTimerStop,
+    forward
   });
 
   useEffect(() => {
@@ -138,7 +140,7 @@ const Timer = ({ initialData: { totalTime: initialTotalTime, timeUsed }, onStop 
           transform: 'translate(-50%, -50%)',
           textAlign: 'center'
         }}>
-          <span className='time-text'>{formatTime(totalTime - time)}</span>
+          <span className='time-text'>{formatTime(forward ? time : (totalTime - time))}</span>
           {
             rests ? (
               <h3>Ciclos restantes: {Math.ceil(cicles)}</h3>
@@ -161,7 +163,13 @@ const Timer = ({ initialData: { totalTime: initialTotalTime, timeUsed }, onStop 
           Reiniciar
         </IonButton>
       </div>
-      <IonToggle labelPlacement='end' onIonChange={(v) => setRests(v.target.checked)}>Agregar descansos</IonToggle>
+      <IonToggle
+        labelPlacement='end'
+        onIonChange={(v) => setRests(v.target.checked)}
+        disabled={forward}
+      >
+        Agregar descansos
+      </IonToggle>
       <Confirmation
         onResult={restartResult}
         title='Seguro que desea reiniciar el tiempo de esta actividad?'
