@@ -2,58 +2,48 @@ import dayjs, { Dayjs } from "dayjs";
 import { Activity, DayDetails, Note } from "../types";
 import { Preferences } from "@capacitor/preferences";
 import { formatToKey } from "../util/time.util";
+import { API_ROUTES, GET } from "./api";
 
-const tareas = [
-  "Responder correos pendientes",
-  "Reunión con el equipo a las 10 AM",
-  "Preparar la presentación del proyecto",
-  "Revisar informes de ventas",
-  "Actualizar el calendario de trabajo",
-  "Llamar al cliente para seguimiento",
-  "Organizar archivos en la computadora",
-  "Comprar suministros de oficina",
-  "Planificar la agenda de la próxima semana",
-  "Realizar respaldo de datos importantes",
-];
+export async function getDaysList(
+  dates: Dayjs[],
+  token: string
+): Promise<DayDetails[]> {
+  const datesToFetch: string[] = [];
 
-export async function getDaysList(dates: Dayjs[]): Promise<DayDetails[]> {
   const resolve = await Promise.all(
     dates.map(async (day, i) => {
       const saved = await getDayDetails(day);
 
       if (saved) return saved;
 
-      return {
-        date: day,
-        activities: Array.from({ length: Math.ceil(Math.random() * 5) }).map(
-          (_, j) => {
-            const completed = Math.random() > 0.5;
-            const time = Math.floor(Math.random() * 30 + 300);
-
-            return {
-              id: i * 5 + j,
-              title: tareas[Math.floor(Math.random() * tareas.length)],
-              primary: j === 0,
-              time,
-              completed,
-              timeUsed: completed ? time : Math.floor(Math.random() * 30 + 30),
-              date: day,
-              maxTime: true,
-            };
-          }
-        ),
-      };
+      datesToFetch.push(formatToKey(day));
     })
   );
 
-  resolve.forEach((r) => {
+  if (datesToFetch.length === 0) return resolve as DayDetails[];
+
+  const days = await GET<DayDetails[]>(
+    API_ROUTES.DAYS,
+    token,
+    { dates: datesToFetch.join(",") },
+    (r) =>
+      r.map((d) => ({
+        date: dayjs(d.date),
+        activities: d.activities.map((a) => ({ ...a, date: dayjs(a.date) })),
+      }))
+  );
+
+  days.forEach((r) => {
     Preferences.set({
       key: formatToKey(r.date),
       value: JSON.stringify(r),
     });
   });
 
-  return resolve;
+  const filterResult = resolve.filter(Boolean) as DayDetails[];
+  filterResult.push(...days);
+
+  return filterResult.toSorted((a, b) => (a.date.isBefore(b.date) ? -1 : 1));
 }
 
 export async function getDayDetails(date: Dayjs) {

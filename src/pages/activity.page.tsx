@@ -23,7 +23,7 @@ const ActivityPage: React.FC<RouteComponentProps<Params>> = ({ match, history })
     return;
   }
 
-  const activity = data.activities.filter(a => a.id === Number(match.params.activityId)).at(0);
+  const activity = data.activities.filter(a => a.id === match.params.activityId).at(0);
 
   if (!activity) {
     history.goBack();

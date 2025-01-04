@@ -1,7 +1,7 @@
 import { Dayjs } from "dayjs";
 
 export type Activity = {
-  id: number;
+  id: string;
   title: string;
   time: number;
   maxTime: boolean;

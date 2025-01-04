@@ -8,6 +8,7 @@ import {
   saveNote,
 } from "../api/days.api";
 import { formatToKey } from "../util/time.util";
+import { useUserStore } from "./user.store";
 
 interface DayState {
   days: DayDetails[];
@@ -23,7 +24,11 @@ export const useDayStore = create<DayState>((set, get) => ({
   days: [],
   dates: [],
   updateDaysData: async (dates: Dayjs[]) => {
-    const data = await getDaysList(dates);
+    const { user, getTokenId } = useUserStore.getState();
+
+    if (!user) return;
+
+    const data = await getDaysList(dates, await getTokenId());
     set(() => ({ days: data, dates }));
   },
   async addActivity(activity) {

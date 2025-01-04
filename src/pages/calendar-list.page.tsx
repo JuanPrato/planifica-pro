@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { getStartOfWeek } from '../util/time.util';
 import { useDayStore } from '../store/day.store';
 import { Preferences } from '@capacitor/preferences';
+import { useUserStore } from '../store/user.store';
 
 function getWeekdays(initialDate?: dayjs.Dayjs) {
   const now = dayjs(initialDate);
@@ -24,10 +25,11 @@ const CalendarPage: React.FC = () => {
 
   const [week, setWeek] = useState(getStartOfWeek(dayjs()));
   const { days, updateDaysData } = useDayStore();
+  const user = useUserStore(s => s.user);
 
   useEffect(() => {
     updateDaysData(getWeekdays(week));
-  }, []);
+  }, [user]);
 
   function updateWeek(plus: number) {
     const w = getStartOfWeek(week.add(plus, "week"));
@@ -64,7 +66,7 @@ const CalendarPage: React.FC = () => {
             ))
           }
         </IonList>
-        {/* <IonButton onClick={() => Preferences.clear()} /> */}
+        <IonButton onClick={() => Preferences.clear()} />
       </IonContent>
     </IonPage>
   );

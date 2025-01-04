@@ -12,7 +12,7 @@ export function getStartOfWeek(d: Dayjs) {
 }
 
 export function getFormattedTimeForActivities(activities: Activity[]) {
-  const totalTime = activities.reduce((acc, a) => acc + a.time, 0);
+  const totalTime = activities.reduce((acc, a) => acc + (a.time ?? 0), 0);
 
   return dayjs().startOf("day").add(totalTime, "minutes").format("HH[h] mm[m]");
 }

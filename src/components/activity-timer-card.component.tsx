@@ -30,7 +30,7 @@ const ActivityTimerCard = ({ activity }: Props) => {
       <IonCardContent>
         <div className='content-container'>
           <Timer
-            initialData={{ totalTime: activity.time, timeUsed: activity.timeUsed, forward: !activity.maxTime }}
+            initialData={{ totalTime: activity.time ?? 0, timeUsed: activity.timeUsed, forward: !activity.maxTime }}
             onStop={onStop}
           />
         </div>

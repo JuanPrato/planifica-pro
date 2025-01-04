@@ -9,6 +9,8 @@ interface UserStoreState {
   user: User | null;
   logIn: () => Promise<void>;
   logOut: () => Promise<void>;
+  validateUser: () => Promise<void>;
+  getTokenId: () => Promise<string>;
 }
 
 export const useUserStore = create<UserStoreState>()((set) => ({
@@ -23,9 +25,22 @@ export const useUserStore = create<UserStoreState>()((set) => ({
     await FirebaseAuthentication.signOut();
     set({ user: null });
   },
+  async validateUser() {
+    const user = await FirebaseAuthentication.getCurrentUser();
+    set({ user: user.user });
+  },
+  async getTokenId() {
+    try {
+      const { token } = await FirebaseAuthentication.getIdToken();
+
+      return token;
+    } catch (error) {
+      console.error(error);
+      return "";
+    }
+  },
 }));
 
-FirebaseAuthentication.getCurrentUser().then((user) => {
-  useUserStore.setState({ user: user.user });
-  console.log(user);
+FirebaseAuthentication.addListener("authStateChange", (change) => {
+  useUserStore.setState({ user: change.user });
 });
