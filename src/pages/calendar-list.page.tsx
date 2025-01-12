@@ -1,4 +1,4 @@
-import { IonButton, IonContent, IonHeader, IonIcon, IonList, IonPage, IonRow, IonText, IonTitle, IonToolbar, useIonLoading } from '@ionic/react';
+import { IonButton, IonContent, IonHeader, IonIcon, IonItem, IonList, IonPage, IonRow, IonText, IonTitle, IonToolbar, useIonLoading } from '@ionic/react';
 
 import { chevronBackOutline, chevronForwardOutline } from 'ionicons/icons';
 import DayItem from '../components/DayItem';
@@ -44,6 +44,8 @@ const CalendarPage: React.FC = () => {
     await dismiss();
   }
 
+  const thisWeek = week.isSame(dayjs(), "week");
+
   return (
     <IonPage>
       <IonHeader >
@@ -56,7 +58,10 @@ const CalendarPage: React.FC = () => {
           <IonButton fill='clear' color="dark" onClick={() => updateWeek(-1)}>
             <IonIcon aria-hidden="true" icon={chevronBackOutline} />
           </IonButton>
-          <IonText>Semana del {week.format("DD [de] MMMM")}</IonText>
+          <div className='week-text-container'>
+            <IonText>Semana del {week.format("DD [de] MMMM")}</IonText>
+            {thisWeek && (<p>Esta semana</p>)}
+          </div>
           <IonButton fill='clear' color="dark" onClick={() => updateWeek(1)}>
             <IonIcon aria-hidden="true" icon={chevronForwardOutline} />
           </IonButton>

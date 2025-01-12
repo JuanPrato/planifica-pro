@@ -1,4 +1,4 @@
-import { IonPage, IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonContent, IonFab, IonFabButton, IonIcon, useIonToast } from '@ionic/react'
+import { IonPage, IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonContent, IonFab, IonFabButton, IonIcon, useIonToast, IonText } from '@ionic/react'
 import dayjs from 'dayjs'
 import React, { useState } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
@@ -13,6 +13,7 @@ import { fromKey } from '../util/time.util'
 const DayPage: React.FC<RouteComponentProps<{ date: string }>> = ({ match }) => {
 
   const day = fromKey(match.params.date);
+  const isToday = day.isSame(dayjs(), "day");
   const data = useDayStore((state) => state.getDayData(day));
   const deleteActivity = useDayStore((state) => state.deleteActivity);
   const [notification] = useIonToast();
@@ -41,7 +42,7 @@ const DayPage: React.FC<RouteComponentProps<{ date: string }>> = ({ match }) => 
           <IonButtons slot="start">
             <IonBackButton />
           </IonButtons>
-          <IonTitle>{day.format('dddd[,] DD [de] MMMM')}
+          <IonTitle>{day.format('dddd[,] DD [de] MMMM')} {isToday && (<IonText color="medium"><small><i>Hoy</i></small></IonText>)}
           </IonTitle>
         </IonToolbar>
       </IonHeader>

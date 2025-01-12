@@ -36,3 +36,15 @@ ion-row > .date {
 ion-loading.task-loading {
   --spinner-color: var(--ion-color-dark);
 }
+
+.week-text-container {
+  display: flex;
+  flex-direction: column;
+  height: 75px;
+  justify-content: center;
+  align-items: center;
+
+  & > p {
+    margin: 0;
+  }
+}
