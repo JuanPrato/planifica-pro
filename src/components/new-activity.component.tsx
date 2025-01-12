@@ -3,9 +3,10 @@ import { useRef } from 'react'
 
 import "./new-activity.component.css";
 import { boolean, number, object, string } from 'yup';
-import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
+import { ErrorMessage, FieldProps, Form, Formik } from 'formik';
 import type { Dayjs } from 'dayjs';
 import { useDayStore } from '../store/day.store';
+import { Field, ToggleField } from './forms/field';
 
 type Values = {
   title: string;
@@ -44,8 +45,9 @@ function NewActivityModal({ date }: { date: Dayjs }) {
   const addActivity = useDayStore((state) => state.addActivity);
 
   async function onSubmit(values: Values) {
+    console.log(values);
     addActivity({
-      id: 0,
+      id: '0',
       completed: false,
       primary: values.principal,
       time: (values.hours * 60 + values.minutes) * 60,
@@ -69,84 +71,40 @@ function NewActivityModal({ date }: { date: Dayjs }) {
           <Form>
             <IonList lines='full'>
               <IonItem>
-                <Field name="title">
-                  {({ field, meta }: FieldProps) => (
-                    <IonInput
-                      label="Nombre de la tarea"
-                      labelPlacement='floating'
-                      name='title'
-                      value={field.value}
-                      onIonChange={field.onChange}
-                      errorText={meta.error}
-                      className={(!!meta.error && "ion-invalid") + " " + (meta.touched && "ion-touched")}
-                    />
-                  )}
-                </Field>
+                <Field
+                  name='title'
+                  label='Nombre de la tarea'
+                  labelPlacement='floating'
+                />
               </IonItem>
               <IonItem lines='none'>
-                <Field name="maxTime" type="checkbox">
-                  {({ field, form }: FieldProps) => (
-                    <IonToggle
-                      color="secondary"
-                      name='maxTime'
-                      onIonChange={({ target }) => form.setFieldValue(field.name, target.checked)}
-                    >
-                      Tiene tiempo máximo?
-                    </IonToggle>
-                  )
-                  }
-                </Field>
+                <ToggleField
+                  name='maxTime'
+                  label='Tiene tiempo máximo?'
+                />
               </IonItem>
               <IonItem>
-                <Field name="hours">
-                  {({ field, meta, form }: FieldProps) => (
-                    <IonInput
-                      label="Horas"
-                      labelPlacement='stacked'
-                      type='number'
-                      name='hours'
-                      value={field.value}
-                      onIonChange={field.onChange}
-                      errorText={meta.error}
-                      className={(!!meta.error && "ion-invalid") + " " + (meta.touched && "ion-touched")}
-                      disabled={!form.values.maxTime}
-                    />
-                  )}
-                </Field>
+                <Field
+                  name='hours'
+                  label='Horas'
+                  type='number'
+                  disabled={(form) => !form.values.maxTime}
+                />
                 <IonCol size='1'>
                   <IonRow className='time-separator ion-justify-content-center'><div>:</div></IonRow>
                 </IonCol>
-                <Field name="minutes">
-                  {
-                    ({ field, meta, form }: FieldProps) => (
-                      <IonInput
-                        label='minutos'
-                        labelPlacement='stacked'
-                        type='number'
-                        name='minutes'
-                        value={field.value}
-                        onIonChange={field.onChange}
-                        errorText={meta.error}
-                        className={(!!meta.error && "ion-invalid") + " " + (meta.touched && "ion-touched")}
-                        disabled={!form.values.maxTime}
-                      />
-                    )
-                  }
-                </Field>
+                <Field
+                  name='minutes'
+                  label='Minutos'
+                  type='number'
+                  disabled={(form) => !form.values.maxTime}
+                />
               </IonItem>
               <IonItem lines='none'>
-                <Field name="principal" type="checkbox">
-                  {({ field, form }: FieldProps) => (
-                    <IonToggle
-                      color="secondary"
-                      name='principal'
-                      onIonChange={({ target }) => form.setFieldValue(field.name, target.checked)}
-                    >
-                      Es una tarea prioritaria?
-                    </IonToggle>
-                  )
-                  }
-                </Field>
+                <ToggleField
+                  name='principal'
+                  label='Es una tarea prioritaria?'
+                />
                 <ErrorMessage name='principal' />
               </IonItem>
               <IonButton expand='full' color="secondary" type='submit'>Guardar tarea</IonButton>
