@@ -9,6 +9,7 @@ import { formatToKey, getFormattedTimeForActivities } from '../util/time.util';
 export default function DayItem({ day: { date, activities } }: { day: DayDetails }) {
 
   const pending = getPendingQ();
+  const isToday = date.isSame(dayjs(), "day");
 
   function getPrimary() {
     return activities.find(a => a.primary);
@@ -19,7 +20,7 @@ export default function DayItem({ day: { date, activities } }: { day: DayDetails
   }
 
   return (
-    <IonItem button routerLink={`/calendar/day/${formatToKey(date)}`} >
+    <IonItem button routerLink={`/calendar/day/${formatToKey(date)}`} className={isToday ? "day-card-today" : ""} color={isToday ? "light" : undefined}>
       <IonGrid fixed>
         <IonRow className="ion-align-items-center">
           <IonCol className='date' size='2'>
@@ -31,6 +32,7 @@ export default function DayItem({ day: { date, activities } }: { day: DayDetails
             <IonLabel>
               <h1 className='ellipsis'>{getPrimary()?.title}</h1>
               <h2>{pending} tareas pendientes - {getFormattedTimeForActivities(activities)}</h2>
+              {isToday && (<h3>Hoy</h3>)}
             </IonLabel>
           </IonCol>
           <IonCol size='2' className='star'>

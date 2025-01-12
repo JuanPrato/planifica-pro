@@ -41,6 +41,12 @@ export const useUserStore = create<UserStoreState>()((set) => ({
   },
 }));
 
+setTimeout(() => {
+  FirebaseAuthentication.getCurrentUser().then((u) => {
+    useUserStore.setState({ user: u.user });
+  });
+}, 100);
+
 FirebaseAuthentication.addListener("authStateChange", (change) => {
   useUserStore.setState({ user: change.user });
 });

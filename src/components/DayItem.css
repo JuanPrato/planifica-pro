@@ -33,3 +33,7 @@
   color: var(--ion-color-warning-tint);
   --ionicon-stroke-width: 50px;
 }
+
+.day-card-today {
+  border: 1px solid var(--ion-color-warning-tint);
+}

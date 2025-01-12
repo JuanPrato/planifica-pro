@@ -32,3 +32,7 @@ ion-row > .date {
 .duties {
   padding-left: 20px;
 }
+
+ion-loading.task-loading {
+  --spinner-color: var(--ion-color-dark);
+}

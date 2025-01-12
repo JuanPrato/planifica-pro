@@ -80,9 +80,9 @@ export async function addActivity(activity: Activity): Promise<number> {
 
   if (existingIndex === -1) {
     id = Math.floor(Math.random() * 500);
-    day.activities.push({ ...activity, id });
+    day.activities.push({ ...activity, id: id.toString() });
   } else {
-    id = day.activities[existingIndex].id;
+    id = parseInt(day.activities[existingIndex].id);
     day.activities = day.activities.with(existingIndex, activity);
   }
 

@@ -1,14 +1,14 @@
-import { IonButton, IonContent, IonHeader, IonIcon, IonList, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButton, IonContent, IonHeader, IonIcon, IonList, IonPage, IonRow, IonText, IonTitle, IonToolbar, useIonLoading } from '@ionic/react';
 
-import './Calendar.css';
 import { chevronBackOutline, chevronForwardOutline } from 'ionicons/icons';
 import DayItem from '../components/DayItem';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { getStartOfWeek } from '../util/time.util';
 import { useDayStore } from '../store/day.store';
-import { Preferences } from '@capacitor/preferences';
 import { useUserStore } from '../store/user.store';
+
+import './Calendar.css';
 
 function getWeekdays(initialDate?: dayjs.Dayjs) {
   const now = dayjs(initialDate);
@@ -26,15 +26,22 @@ const CalendarPage: React.FC = () => {
   const [week, setWeek] = useState(getStartOfWeek(dayjs()));
   const { days, updateDaysData } = useDayStore();
   const user = useUserStore(s => s.user);
+  const [present, dismiss] = useIonLoading();
 
   useEffect(() => {
-    updateDaysData(getWeekdays(week));
+    updateWeek(0);
   }, [user]);
 
-  function updateWeek(plus: number) {
+  async function updateWeek(plus: number) {
+    await present({
+      message: "Cargando tareas...",
+      cssClass: "task-loading",
+      id: "1"
+    })
     const w = getStartOfWeek(week.add(plus, "week"));
+    await updateDaysData(getWeekdays(w));
     setWeek(w);
-    updateDaysData(getWeekdays(w));
+    await dismiss();
   }
 
   return (
@@ -45,11 +52,6 @@ const CalendarPage: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Primera pestaña</IonTitle>
-          </IonToolbar>
-        </IonHeader>
         <IonRow className='calendar-header ion-justify-content-around ion-align-items-center'>
           <IonButton fill='clear' color="dark" onClick={() => updateWeek(-1)}>
             <IonIcon aria-hidden="true" icon={chevronBackOutline} />
@@ -66,7 +68,7 @@ const CalendarPage: React.FC = () => {
             ))
           }
         </IonList>
-        <IonButton onClick={() => Preferences.clear()} />
+        {/* <IonButton onClick={() => Preferences.clear()} /> */}
       </IonContent>
     </IonPage>
   );
